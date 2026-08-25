@@ -35,3 +35,20 @@ export class SubscriptionEngine {
     return { proratedCharge, creditUnused, netAmountDue };
   }
 }
+
+export class InvoiceBreakdownEngine {
+  public static generateInvoiceData(subtotal: number, taxRatePct: number = 10): {
+    subtotal: number;
+    taxAmount: number;
+    grandTotal: number;
+    invoiceRef: string;
+  } {
+    const taxAmount = (subtotal * taxRatePct) / 100;
+    return {
+      subtotal,
+      taxAmount,
+      grandTotal: subtotal + taxAmount,
+      invoiceRef: `INV-${Date.now()}-${Math.floor(Math.random() * 8999 + 1000)}`
+    };
+  }
+}
