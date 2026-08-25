@@ -43,3 +43,15 @@ export class AbacEngine {
     return { allowed: true, reason: "Access granted by ABAC engine policy" };
   }
 }
+
+export class AbacSecurityPolicyEnhancement {
+  public static checkIpWhitelist(requestIp: string, allowedIps: string[]): boolean {
+    if (allowedIps.length === 0) return true;
+    return allowedIps.includes(requestIp);
+  }
+
+  public static checkSessionTimeout(lastActiveTime: Date, timeoutMinutes: number = 30): boolean {
+    const diffMs = new Date().getTime() - lastActiveTime.getTime();
+    return diffMs <= timeoutMinutes * 60 * 1000;
+  }
+}
