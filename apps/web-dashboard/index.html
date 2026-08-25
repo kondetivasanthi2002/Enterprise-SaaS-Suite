@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enterprise SaaS Operations Platform</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/dashboard.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+  <div id="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="url(#grad1)"/>
+            <path d="M8 16L14 22L24 10" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="grad1" x1="0" y1="0" x2="32" y2="32">
+                <stop stop-color="#6366F1"/>
+                <stop offset="1" stop-color="#8B5CF6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="brand-title">AURA ENTERPRISE</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#overview" class="nav-item active" id="nav-overview">
+          <span class="nav-icon">📊</span> Overview
+        </a>
+        <a href="#tenants" class="nav-item" id="nav-tenants">
+          <span class="nav-icon">🏢</span> Multi-Tenancy
+        </a>
+        <a href="#finance" class="nav-item" id="nav-finance">
+          <span class="nav-icon">💰</span> Financial Ledger
+        </a>
+        <a href="#billing" class="nav-item" id="nav-billing">
+          <span class="nav-icon">💳</span> SaaS Subscriptions
+        </a>
+        <a href="#hrms" class="nav-item" id="nav-hrms">
+          <span class="nav-icon">👥</span> HRMS & Payroll
+        </a>
+        <a href="#crm" class="nav-item" id="nav-crm">
+          <span class="nav-icon">🎯</span> Sales CRM
+        </a>
+        <a href="#inventory" class="nav-item" id="nav-inventory">
+          <span class="nav-icon">📦</span> Stock & Logistics
+        </a>
+        <a href="#audit" class="nav-item" id="nav-audit">
+          <span class="nav-icon">🛡️</span> Security & Audit
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-pill">
+          <div class="avatar">EA</div>
+          <div class="user-info">
+            <div class="user-name">Enterprise Admin</div>
+            <div class="user-role">Super Admin</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="top-navbar">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Search tenants, accounts, leads, employees, or SKUs... (Ctrl + K)">
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" title="Notifications">🔔 <span class="badge-dot"></span></button>
+          <button class="icon-btn" title="Environment">🌐 Production US-East</button>
+          <div class="tenant-selector">
+            <select id="active-tenant-select">
+              <option value="tnt-global">Global Enterprise Workspace</option>
+              <option value="tnt-acme">Acme Corp (Pro Tier)</option>
+              <option value="tnt-stark">Stark Industries (Enterprise)</option>
+              <option value="tnt-cyber">Cyberdyne Systems (Starter)</option>
+            </select>
+          </div>
+        </div>
+      </header>
+
+      <div id="page-content" class="content-body">
+      </div>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
