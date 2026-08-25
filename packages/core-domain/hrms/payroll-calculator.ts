@@ -40,3 +40,11 @@ export class PayrollCalculator {
     };
   }
 }
+
+export class PayrollBonusEngine {
+  public static calculatePerformanceBonus(baseSalary: number, rating: "EXCEEDS" | "MEETS" | "NEEDS_IMPROVEMENT"): number {
+    if (rating === "EXCEEDS") return baseSalary * 0.20;
+    if (rating === "MEETS") return baseSalary * 0.08;
+    return 0;
+  }
+}
