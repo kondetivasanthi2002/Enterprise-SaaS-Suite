@@ -3,30 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enterprise SaaS Operations Platform</title>
+  <title>Enterprise SaaS Operations Suite</title>
   <link rel="stylesheet" href="styles/main.css">
-  <link rel="stylesheet" href="styles/dashboard.css">
-  <link rel="stylesheet" href="styles/components.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body class="dark-theme">
+<body class="light-theme">
   <div id="app-container">
+    <!-- Sidebar Navigation -->
     <aside class="sidebar">
       <div class="sidebar-header">
         <div class="brand-logo">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <rect width="32" height="32" rx="8" fill="url(#grad1)"/>
-            <path d="M8 16L14 22L24 10" stroke="white" stroke-width="3" stroke-linecap="round"/>
-            <defs>
-              <linearGradient id="grad1" x1="0" y1="0" x2="32" y2="32">
-                <stop stop-color="#6366F1"/>
-                <stop offset="1" stop-color="#8B5CF6"/>
-              </linearGradient>
-            </defs>
-          </svg>
-          <span class="brand-title">AURA ENTERPRISE</span>
+          <div class="brand-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <span class="brand-title">AURA SAAS</span>
         </div>
       </div>
       <nav class="sidebar-nav">
@@ -56,39 +50,53 @@
         </a>
       </nav>
       <div class="sidebar-footer">
-        <div class="user-pill">
+        <div class="user-profile">
           <div class="avatar">EA</div>
-          <div class="user-info">
+          <div class="user-details">
             <div class="user-name">Enterprise Admin</div>
-            <div class="user-role">Super Admin</div>
+            <div class="user-role">Super Administrator</div>
           </div>
         </div>
       </div>
     </aside>
 
+    <!-- Main Content Body -->
     <main class="main-content">
       <header class="top-navbar">
-        <div class="search-bar">
+        <div class="search-box">
           <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Search tenants, accounts, leads, employees, or SKUs... (Ctrl + K)">
+          <input type="text" id="global-search-input" placeholder="Search tenants, accounts, employees, leads, SKUs... (Ctrl + K)">
         </div>
         <div class="top-actions">
-          <button class="icon-btn" title="Notifications">🔔 <span class="badge-dot"></span></button>
-          <button class="icon-btn" title="Environment">🌐 Production US-East</button>
+          <span class="badge-status online">● System Operational</span>
+          <button class="btn btn-secondary" onclick="alert('Notification Center: All systems functioning normally')">🔔 Notifications (3)</button>
           <div class="tenant-selector">
-            <select id="active-tenant-select">
-              <option value="tnt-global">Global Enterprise Workspace</option>
-              <option value="tnt-acme">Acme Corp (Pro Tier)</option>
-              <option value="tnt-stark">Stark Industries (Enterprise)</option>
-              <option value="tnt-cyber">Cyberdyne Systems (Starter)</option>
+            <select id="active-tenant-selector">
+              <option value="global">All Tenants (Global View)</option>
+              <option value="stark">Stark Industries (Enterprise)</option>
+              <option value="acme">Acme Corp (Pro Tier)</option>
+              <option value="cyberdyne">Cyberdyne Systems (Starter)</option>
             </select>
           </div>
         </div>
       </header>
 
+      <!-- Dynamic Page Container -->
       <div id="page-content" class="content-body">
+        <!-- SPA Pages dynamically injected here -->
       </div>
     </main>
+  </div>
+
+  <!-- Reusable Interactive Modal Container -->
+  <div id="modal-backdrop" class="modal-backdrop hidden">
+    <div id="modal-container" class="modal-container">
+      <div class="modal-header">
+        <h3 id="modal-title">Action Dialog</h3>
+        <button class="modal-close" onclick="closeModal()">×</button>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
   </div>
 
   <script src="js/app.js"></script>
