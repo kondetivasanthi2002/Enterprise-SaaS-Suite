@@ -50,3 +50,25 @@ export class DoubleEntryLedger {
     return { success: true, message: `Journal entry ${entry.id} posted successfully` };
   }
 }
+
+export class LedgerReconciliationEngine {
+  public static reconcileTrialBalance(accounts: { code: string; type: string; balance: number }[]): {
+    totalAssets: number;
+    totalLiabilities: number;
+    totalEquity: number;
+    isBalanced: boolean;
+  } {
+    let assets = 0, liabilities = 0, equity = 0;
+    for (const acc of accounts) {
+      if (acc.type === "ASSET") assets += acc.balance;
+      else if (acc.type === "LIABILITY") liabilities += acc.balance;
+      else if (acc.type === "EQUITY") equity += acc.balance;
+    }
+    return {
+      totalAssets: assets,
+      totalLiabilities: liabilities,
+      totalEquity: equity,
+      isBalanced: Math.abs(assets - (liabilities + equity)) < 0.01
+    };
+  }
+}
