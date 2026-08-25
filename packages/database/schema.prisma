@@ -1,0 +1,167 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Tenant {
+  id                  String   @id @default(uuid())
+  name                String
+  slug                String   @unique
+  status              String   @default("ACTIVE")
+  maxUsers            Int      @default(10)
+  maxStorageGb        Int      @default(10)
+  apiRateLimitPerMin Int      @default(1000)
+  customDomainEnabled Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  users               User[]
+  subscriptions       Subscription[]
+  invoices            Invoice[]
+  accounts            Account[]
+  employees           Employee[]
+  leads               Lead[]
+  deals               Deal[]
+  stockItems          StockItem[]
+  auditLogs           AuditLog[]
+}
+
+model User {
+  id           String    @id @default(uuid())
+  tenantId     String
+  tenant       Tenant    @relation(fields: [tenantId], references: [id])
+  email        String    @unique
+  passwordHash String
+  passwordSalt String
+  firstName    String
+  lastName     String
+  roles        String[]
+  isActive     Boolean   @default(true)
+  isMfaEnabled Boolean   @default(false)
+  mfaSecret    String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  sessions     Session[]
+}
+
+model Session {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  token      String   @unique
+  ipAddress  String
+  userAgent  String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+}
+
+model Subscription {
+  id           String    @id @default(uuid())
+  tenantId     String
+  tenant       Tenant    @relation(fields: [tenantId], references: [id])
+  planTier     String
+  monthlyPrice Decimal
+  status       String    @default("ACTIVE")
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  cancelAtPeriodEnd  Boolean   @default(false)
+}
+
+model Invoice {
+  id            String   @id @default(uuid())
+  tenantId      String
+  tenant        Tenant   @relation(fields: [tenantId], references: [id])
+  invoiceNumber String   @unique
+  amount        Decimal
+  taxAmount     Decimal
+  status        String   @default("UNPAID")
+  dueDate       DateTime
+  paidAt        DateTime?
+  createdAt     DateTime @default(now())
+}
+
+model Account {
+  id          String   @id @default(uuid())
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  code        String
+  name        String
+  type        String
+  parentCode  String?
+  balance     Decimal  @default(0.0)
+  lines       JournalLine[]
+}
+
+model JournalLine {
+  id          String   @id @default(uuid())
+  accountId   String
+  account     Account  @relation(fields: [accountId], references: [id])
+  debit       Decimal  @default(0.0)
+  credit      Decimal  @default(0.0)
+  postingDate DateTime @default(now())
+}
+
+model Employee {
+  id               String   @id @default(uuid())
+  tenantId         String
+  tenant           Tenant   @relation(fields: [tenantId], references: [id])
+  employeeCode     String   @unique
+  firstName        String
+  lastName         String
+  email            String
+  department       String
+  jobTitle         String
+  baseMonthlySalary Decimal
+  taxRate          Decimal
+  hireDate         DateTime
+}
+
+model Lead {
+  id                String   @id @default(uuid())
+  tenantId          String
+  tenant            Tenant   @relation(fields: [tenantId], references: [id])
+  companyName       String
+  contactEmail      String
+  employeeCount     Int
+  annualRevenue     Decimal
+  leadScore         Int      @default(0)
+  status            String   @default("NEW")
+}
+
+model Deal {
+  id                String   @id @default(uuid())
+  tenantId          String
+  tenant            Tenant   @relation(fields: [tenantId], references: [id])
+  title             String
+  value             Decimal
+  stage             String   @default("PROSPECTING")
+  probability       Int      @default(10)
+  expectedCloseDate DateTime
+}
+
+model StockItem {
+  id              String   @id @default(uuid())
+  tenantId        String
+  tenant          Tenant   @relation(fields: [tenantId], references: [id])
+  sku             String   @unique
+  name            String
+  quantityOnHand  Int
+  reorderPoint    Int
+  reorderQuantity Int
+  unitCost        Decimal
+}
+
+model AuditLog {
+  id           String   @id @default(uuid())
+  tenantId     String
+  tenant       Tenant   @relation(fields: [tenantId], references: [id])
+  actorUserId  String
+  action       String
+  resource     String
+  previousHash String
+  currentHash  String
+  createdAt    DateTime @default(now())
+}
