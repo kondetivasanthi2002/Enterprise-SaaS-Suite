@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "description": "Production-Grade Multi-Tenant Enterprise & SaaS Operations Suite",
-  "main": "apps/api-gateway/server.ts",
+  "main": "index.js",
   "scripts": {
-    "test": "node tests/test-runner.js",
+    "start": "node index.js",
     "build": "tsc --noEmit",
+    "install": "npm install",
+    "test": "python tests/test-runner.py",
     "lint": "eslint .",
     "seed": "ts-node packages/database/seed-generator.ts"
   },
